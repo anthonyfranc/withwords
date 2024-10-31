@@ -14,7 +14,7 @@
     <template #title>
       <span
         class="dark:bg-gradient-to-b dark:from-white dark:via-slate-50 dark:to-slate-400 dark:bg-clip-text dark:text-transparent">
-        Your new go-to for <span class="text-primary">UI framework</span> <br />
+        Your new go-to for <span class="text-primary-500">UI framework</span> <br />
         coding answers
       </span>
     </template>
@@ -36,24 +36,22 @@
   </ULandingHero>
   <!--End of Hero-->
   <!-- Icon Grid-->
-  <ULandingSection class="!pt-0" title="Supported Frameworks">
+  <ULandingSection class="-mt-32" title="Supported Frameworks" description="Discover the frameworks we support to enhance productivity and streamline your development process.">
     <ULandingLogos>
-  <div class="flex flex-row flex-wrap gap-10 relative justify-center items-center h-full w-full">
-    <span v-for="(icon, index) in landingLogos" :key="index">
-      <UTooltip :text="icon.longName" :popper="{ arrow: true, placement: 'top' }" :ui="{
-          base: '[@media(pointer:coarse)]:!block h-6 px-1 py-1 text-xs font-normal truncate relative',
-          middot: 'hidden'
-      }" class="h-8">
-        <NuxtImg 
-          :src="colorMode.value === 'dark' ? icon.iconURLDark : icon.iconURLLight" 
-          :class="['transition duration-300 ease-in-out hover:scale-110 text-xl', { 'grayscale': icon.longName === 'Coming Soon' }]"
-        />
-      </UTooltip>
-    </span>
-  </div>
-</ULandingLogos>
-</ULandingSection>
-<!--End of Icon Grid-->
+      <div class="flex flex-row flex-wrap gap-10 relative justify-center items-center h-full w-full">
+        <span v-for="(icon, index) in landingLogos" :key="index">
+          <UTooltip :text="icon.longName" :popper="{ arrow: true, placement: 'top' }" :ui="{
+            base: '[@media(pointer:coarse)]:!block h-6 px-1 py-1 text-xs font-normal truncate relative',
+            middot: 'hidden'
+          }" class="h-8">
+            <NuxtImg :src="colorMode.value === 'dark' ? icon.iconURLDark : icon.iconURLLight"
+              :class="['transition duration-300 ease-in-out hover:scale-110 text-xl', { 'grayscale': icon.longName === 'Coming Soon' }]" />
+          </UTooltip>
+        </span>
+      </div>
+    </ULandingLogos>
+  </ULandingSection>
+  <!--End of Icon Grid-->
   <!-- Feature Cards using ULandingCard -->
   <ULandingSection class="!pt-0">
     <UPageGrid>
@@ -85,34 +83,37 @@
   <!-- Pricing Section using UPricingGrid and UPricingCard -->
   <UPageHero align="center">
     <template #title>
-      Answers without <span class="font-bold text-primary-500">breaking</span> the bank
+      Get answers without <span class="font-bold text-primary-500">breaking</span> the bank
     </template>
     <template #description>
-      We provide developer friendly solutions with pricing plans for all needs, <br
-        class="hidden lg:block" /> and a free tier for all users.
+      We provide developer friendly solutions with pricing plans for all needs, <br class="hidden lg:block" /> and a
+      free tier for all users.
     </template>
   </UPageHero>
   <ULandingSection class="!pt-0" id="pricing">
     <UPricingGrid compact>
-      <UPricingCard title="Free" description="Perfect for getting started" price="$0" cycle="/month" :highlight="false" :features="[
-        '25 messages per month',
-        'Basic chat features',
-        'Community support'
-      ]" :button="{ label: 'Get Started', to: '/auth/register' }" />
+      <UPricingCard title="Free" description="Perfect for getting started" price="$0" cycle="/month" :highlight="false"
+        :features="[
+          '25 messages per month',
+          'Basic chat features',
+          'Community support'
+        ]" :button="{ label: 'Get Started', to: '/auth/register' }" />
 
-      <UPricingCard title="Indie" description="Perfect for small developers" price="$10" cycle="/month" :highlight="true" :scale="true" :features="[
-        '500 messages per month',
-        'Advanced chat features',
-        'Custom chat history',
-        'Priority support',
-      ]" :button="{ label: 'Coming Soon', color: 'primary' }" :badge="{ label: 'Popular' }" />
+      <UPricingCard title="Indie" description="Perfect for small developers" price="$10" cycle="/month"
+        :highlight="true" :scale="true" :features="[
+          '500 messages per month',
+          'Advanced chat features',
+          'Custom chat history',
+          'Priority support',
+        ]" :button="{ label: 'Coming Soon', color: 'primary' }" :badge="{ label: 'Popular' }" />
 
-      <UPricingCard title="Expert" description="Enough power to help you build" price="$25" cycle="/month" :highlight="false" :features="[
-        'Unlimited messages',
-        'Advanced chat features',
-        'Custom chat history',
-        'Webcontainer support w/ live previews'
-      ]" :button="{ label: 'Coming Soon' }" />
+      <UPricingCard title="Expert" description="Enough power to help you build" price="$25" cycle="/month"
+        :highlight="false" :features="[
+          'Unlimited messages',
+          'Advanced chat features',
+          'Custom chat history',
+          'Webcontainer support w/ live previews'
+        ]" :button="{ label: 'Coming Soon' }" />
     </UPricingGrid>
   </ULandingSection>
 </template>
@@ -122,13 +123,13 @@ import { TransitionRoot } from '@headlessui/vue'
 
 // Example landing logos with light and dark mode URLs
 const landingLogos = [
-  { 
-    iconURLLight: './assets/nuxt-ui-light.svg', 
-    iconURLDark: './assets/nuxt-ui-dark.svg', longName: 'Nuxt UI' 
+  {
+    iconURLLight: './assets/nuxt-ui-light.svg',
+    iconURLDark: './assets/nuxt-ui-dark.svg', longName: 'Nuxt UI'
   },
-  { 
-    iconURLLight: './assets/nuxt-ui-pro-light.svg', 
-    iconURLDark: './assets/nuxt-ui-pro-dark.svg', longName: 'Coming Soon' 
+  {
+    iconURLLight: './assets/nuxt-ui-pro-light.svg',
+    iconURLDark: './assets/nuxt-ui-pro-dark.svg', longName: 'Coming Soon'
   }
 ]
 
