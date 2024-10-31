@@ -78,13 +78,14 @@ const resendVerification = async () => {
 
   resending.value = true
   try {
-    const { error } = await client.auth.resend({
+    const { data, error } = await client.auth.resend({
       type: 'signup',
       email: verificationEmail.value,
       options: {
         emailRedirectTo: `${window.location.origin}/auth/callback`
       }
     })
+    console.log(data)
 
     if (error) throw error
 
