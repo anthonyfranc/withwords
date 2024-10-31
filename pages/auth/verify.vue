@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-[calc(100vh-4rem)] flex items-center justify-center py-12 px-4">
     <div class="max-w-md w-full">
       <UCard>
         <template #header>
@@ -52,7 +52,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 const client = useSupabaseClient()
 const toast = useToast()
 const resending = ref(false)
@@ -107,12 +107,12 @@ const resendVerification = async () => {
 
 // Redirect if user is already verified
 watchEffect(() => {
-  if (user.value?.email_verified) {
+  if (user.value?.email_confirmed_at) {
     navigateTo('/dashboard')
   }
 })
 
 definePageMeta({
-  layout: false
+  layout: 'default'
 })
 </script>

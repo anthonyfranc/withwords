@@ -1,11 +1,5 @@
 <template>
   <div>
-    <ChatHeader
-      :show-menu-button="chatStarted"
-      @toggle-sidebar="toggleSidebar"
-      @new-chat="newChat"
-    />
-
     <ChatWelcome
       v-if="!chatStarted"
       @start="startChat"

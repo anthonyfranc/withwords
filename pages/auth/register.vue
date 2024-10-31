@@ -1,13 +1,5 @@
 <template>
-  <UHeader>
-    <template #logo>
-      <NuxtLink to="/" class="flex items-center space-x-2">
-        <UIcon name="i-heroicons-chat-bubble-left-right" class="text-primary-500 w-6 h-6" />
-        <h1 class="font-bold text-xl">NuxtUI Chat</h1>
-      </NuxtLink>
-    </template>
-  </UHeader>
-  <div class="h-screen flex flex-col items-center justify-center">
+  <div class="min-h-[calc(100vh-4rem)] flex items-center justify-center py-12 px-4">
     <UCard class="max-w-lg w-full">
       <UForm :validate="validate" :state="state" @submit="onSubmit">
         <div class="flex gap-x-2 !mt-6 w-full">
@@ -246,7 +238,6 @@ watchEffect(() => {
 })
 
 definePageMeta({
-  layout: false,
-  middleware: ['guest']
+  layout: 'default'
 })
 </script>

@@ -1,10 +1,8 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
-      <div class="text-center">
-        <h2 class="mt-6 text-3xl font-extrabold text-gray-900 dark:text-white">
-          Sign in to your account
-        </h2>
+  <div class="min-h-[calc(100vh-4rem)] flex items-center justify-center py-12 px-4">
+    <div class="max-w-md w-full">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold">Sign in to your account</h2>
       </div>
       
       <UCard>
@@ -83,26 +81,15 @@ const handleLogin = async () => {
       password: formState.value.password
     })
 
-    if (error) {
-      // Check if the error is due to unverified email
-      if (error.message.toLowerCase().includes('email not confirmed')) {
-        localStorage.setItem('verificationEmail', formState.value.email)
-        return navigateTo('/auth/verify')
-      }
-      throw error
-    }
+    if (error) throw error
 
-    // Store email in localStorage and redirect if not verified
-    if (data.user && !data.user.email_verified) {
+    // Check email confirmation using email_confirmed_at
+    if (data.user && !data.user.email_confirmed_at) {
       localStorage.setItem('verificationEmail', data.user.email)
-      toast.add({
-        title: 'Email Not Verified',
-        description: 'Please verify your email to continue.',
-        color: 'orange'
-      })
       return navigateTo('/auth/verify')
     }
 
+    // If email is confirmed, redirect to dashboard
     navigateTo('/dashboard')
   } catch (error) {
     toast.add({
@@ -115,20 +102,15 @@ const handleLogin = async () => {
   }
 }
 
-// Redirect if already logged in
+// Only redirect if user is logged in AND email is confirmed
 const user = useSupabaseUser()
 watchEffect(() => {
-  if (user.value) {
-    if (!user.value.email_verified) {
-      localStorage.setItem('verificationEmail', user.value.email || '')
-      navigateTo('/auth/verify')
-    } else {
-      navigateTo('/dashboard')
-    }
+  if (user.value?.email_confirmed_at) {
+    navigateTo('/dashboard')
   }
 })
 
 definePageMeta({
-  layout: false
+  layout: 'default'
 })
 </script>

@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const isClient = process.client
   
   // Allow access to public routes
-  const publicRoutes = ['/auth/login', '/auth/register', '/auth/verify', '/auth/callback']
+  const publicRoutes = ['/auth/login', '/auth/register', '/auth/verify', '/auth/callback', '/', '/pricing', '/terms']
   if (publicRoutes.includes(to.path)) {
     return
   }
@@ -22,21 +22,15 @@ export default defineNuxtRouteMiddleware(async (to) => {
     
     if (error) throw error
 
-    // If user exists but email is not verified
-    if (session?.user && !session.user.email_verified) {
-      // Store email in localStorage when redirecting to verify (client-side only)
+    // Check if email is confirmed using email_confirmed_at
+    if (session?.user && !session.user.email_confirmed_at && to.path !== '/auth/verify') {
       if (isClient && session.user.email) {
         localStorage.setItem('verificationEmail', session.user.email)
       }
-      
-      // Don't redirect if already on verify page
-      if (to.path !== '/auth/verify') {
-        return navigateTo('/auth/verify')
-      }
+      return navigateTo('/auth/verify')
     }
   } catch (error) {
     console.error('Auth middleware error:', error)
-    // On error, redirect to login
     return navigateTo('/auth/login')
   }
 })
