@@ -11,9 +11,6 @@ export default defineNuxtConfig({
   experimental: {
     inlineSSRStyles: false,
   },
-  uiPro:{
-    key: 'FB44E30D-A7D3-4BB1-826D-C5D3742686B4'
-  },
   ui: {
     global: true,
     icons: ['heroicons'],

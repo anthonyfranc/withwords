@@ -22,7 +22,6 @@
           <UInput name="email" v-model="state.email" placeholder="you@example.com" />
         </UFormGroup>
 
-        <!-- Password input and strength meter -->
         <div class="flex gap-x-2 !mt-6">
           <UFormGroup label="Password" name="password" class="w-1/2">
             <UInput 
@@ -45,7 +44,6 @@
           </UFormGroup>
         </div>
 
-        <!-- Password strength meter and label -->
         <UMeterGroup :max="80">
           <template #indicator>
             <div class="flex gap-1.5 justify-between text-sm pt-2">
@@ -142,31 +140,26 @@ const updatePasswordStrength = () => {
 
   let score = 0
 
-  // Length criteria
   if (password.length >= 12) {
     score += 30
   } else if (password.length >= 8) {
     score += 10
   }
 
-  // Character type criteria
   if (/[A-Z]/.test(password)) score += 20
   if (/[a-z]/.test(password)) score += 10
   if (/[0-9]/.test(password)) score += 20
   if (/[\W]/.test(password)) score += 20
 
-  // Common password check
   const commonPasswords = ['password', '123456', 'qwerty', 'abc123', 'admin', 'letmein']
   if (commonPasswords.some(commonPassword => password.toLowerCase().includes(commonPassword))) {
     score -= 40
   }
 
-  // Pattern check
   if (/([a-zA-Z0-9])\1{2,}/.test(password)) {
     score -= 20
   }
 
-  // Update strength indicators
   passwordStrength.value = score
 
   if (score <= 30) {
@@ -202,8 +195,7 @@ async function onSubmit(event: FormSubmitEvent<any>) {
 
   loading.value = true
   try {
-    // Sign up the user
-    const { data, error: signUpError } = await client.auth.signUp({
+    const { data, error } = await client.auth.signUp({
       email: state.email,
       password: state.password,
       options: {
@@ -215,31 +207,19 @@ async function onSubmit(event: FormSubmitEvent<any>) {
       }
     })
 
-    if (signUpError) throw signUpError
+    if (error) throw error
 
-    if (!data.session) {
-      // Email confirmation is required
-      toast.add({
-        title: 'Success',
-        description: 'Please check your email to verify your account.',
-        color: 'green'
-      })
-      
-      // Store email in localStorage for verify page
-      localStorage.setItem('verificationEmail', state.email)
-      
-      // Redirect to verify page
-      await router.push('/auth/verify')
-    } else {
-      // Email confirmation is disabled, user is automatically signed in
-      toast.add({
-        title: 'Success',
-        description: 'Your account has been created.',
-        color: 'green'
-      })
-      
-      await router.push('/dashboard')
-    }
+    // Store email in localStorage for verification page
+    localStorage.setItem('verificationEmail', state.email)
+
+    // Always redirect to verify page after signup
+    toast.add({
+      title: 'Success',
+      description: 'Please check your email to verify your account.',
+      color: 'green'
+    })
+    
+    await router.push('/auth/verify')
   } catch (err) {
     console.error('Registration error:', err)
     toast.add({
@@ -256,7 +236,12 @@ async function onSubmit(event: FormSubmitEvent<any>) {
 const user = useSupabaseUser()
 watchEffect(() => {
   if (user.value) {
-    router.push('/dashboard')
+    if (!user.value.email_verified) {
+      localStorage.setItem('verificationEmail', user.value.email || '')
+      router.push('/auth/verify')
+    } else {
+      router.push('/dashboard')
+    }
   }
 })
 

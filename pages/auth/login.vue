@@ -78,12 +78,30 @@ const toast = useToast()
 const handleLogin = async () => {
   try {
     loading.value = true
-    const { error } = await client.auth.signInWithPassword({
+    const { data, error } = await client.auth.signInWithPassword({
       email: formState.value.email,
       password: formState.value.password
     })
 
-    if (error) throw error
+    if (error) {
+      // Check if the error is due to unverified email
+      if (error.message.toLowerCase().includes('email not confirmed')) {
+        localStorage.setItem('verificationEmail', formState.value.email)
+        return navigateTo('/auth/verify')
+      }
+      throw error
+    }
+
+    // Store email in localStorage and redirect if not verified
+    if (data.user && !data.user.email_verified) {
+      localStorage.setItem('verificationEmail', data.user.email)
+      toast.add({
+        title: 'Email Not Verified',
+        description: 'Please verify your email to continue.',
+        color: 'orange'
+      })
+      return navigateTo('/auth/verify')
+    }
 
     navigateTo('/dashboard')
   } catch (error) {
@@ -101,7 +119,16 @@ const handleLogin = async () => {
 const user = useSupabaseUser()
 watchEffect(() => {
   if (user.value) {
-    navigateTo('/dashboard')
+    if (!user.value.email_verified) {
+      localStorage.setItem('verificationEmail', user.value.email || '')
+      navigateTo('/auth/verify')
+    } else {
+      navigateTo('/dashboard')
+    }
   }
+})
+
+definePageMeta({
+  layout: false
 })
 </script>
