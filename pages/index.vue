@@ -27,8 +27,6 @@
         <UButton label="Get Started" to="/" size="xl" icon="i-heroicons-arrow-right-20-solid" :trailing="true"
           color="black" :ui="{ rounded: 'rounded-full' }" />
       </UTooltip>
-      <UButton label="Contact Us" to="/" size="xl" icon="i-heroicons-paper-airplane" :trailing="true" color="white"
-        :ui="{ rounded: 'rounded-full' }" />
     </template>
     <HeroHomeBg />
     <TransitionRoot appear :show="true" enter="transition ease-out duration-1000" enter-from="opacity-0"
@@ -37,9 +35,27 @@
     </TransitionRoot>
   </ULandingHero>
   <!--End of Hero-->
-
+  <!-- Icon Grid-->
+  <ULandingSection class="!pt-0" title="Supported Frameworks">
+    <ULandingLogos>
+  <div class="flex flex-row flex-wrap gap-10 relative justify-center items-center h-full w-full">
+    <span v-for="(icon, index) in landingLogos" :key="index">
+      <UTooltip :text="icon.longName" :popper="{ arrow: true, placement: 'top' }" :ui="{
+          base: '[@media(pointer:coarse)]:!block h-6 px-1 py-1 text-xs font-normal truncate relative',
+          middot: 'hidden'
+      }" class="h-8">
+        <NuxtImg 
+          :src="colorMode.value === 'dark' ? icon.iconURLDark : icon.iconURLLight" 
+          :class="['transition duration-300 ease-in-out hover:scale-110 text-xl', { 'grayscale': icon.longName === 'Coming Soon' }]"
+        />
+      </UTooltip>
+    </span>
+  </div>
+</ULandingLogos>
+</ULandingSection>
+<!--End of Icon Grid-->
   <!-- Feature Cards using ULandingCard -->
-  <ULandingSection title="Why Choose Us?" class="!pt-0">
+  <ULandingSection class="!pt-0">
     <UPageGrid>
       <ULandingCard title="Instant Answers" description="Receive quick, precise responses with the help of advanced AI."
         icon="i-heroicons-bolt" color="primary" />
@@ -69,38 +85,53 @@
   <!-- Pricing Section using UPricingGrid and UPricingCard -->
   <UPageHero align="center">
     <template #title>
-      Analytics without <span class="font-bold text-primary-500">breaking</span> the bank
+      Answers without <span class="font-bold text-primary-500">breaking</span> the bank
     </template>
     <template #description>
-      We provide market analytics with AI powered technology with pricing plans for all needs, <br
+      We provide developer friendly solutions with pricing plans for all needs, <br
         class="hidden lg:block" /> and a free tier for all users.
     </template>
   </UPageHero>
   <ULandingSection class="!pt-0" id="pricing">
     <UPricingGrid compact>
       <UPricingCard title="Free" description="Perfect for getting started" price="$0" cycle="/month" :highlight="false" :features="[
-        '100 messages per month',
+        '25 messages per month',
         'Basic chat features',
         'Community support'
       ]" :button="{ label: 'Get Started', to: '/auth/register' }" />
 
-      <UPricingCard title="Pro" description="For power users" price="$10" cycle="/month" :highlight="true" :scale="true" :features="[
+      <UPricingCard title="Indie" description="Perfect for small developers" price="$10" cycle="/month" :highlight="true" :scale="true" :features="[
+        '500 messages per month',
+        'Advanced chat features',
+        'Custom chat history',
+        'Priority support',
+      ]" :button="{ label: 'Coming Soon', color: 'primary' }" :badge="{ label: 'Popular' }" />
+
+      <UPricingCard title="Expert" description="Enough power to help you build" price="$25" cycle="/month" :highlight="false" :features="[
         'Unlimited messages',
         'Advanced chat features',
-        'Priority support',
-        'Custom chat history'
-      ]" :button="{ label: 'Upgrade Now', to: '/pricing', color: 'primary' }" :badge="{ label: 'Popular' }" />
-
-      <UPricingCard title="Enterprise" description="For large teams" price="Custom" :highlight="false" :features="[
-        'Everything in Pro',
-        'Custom integrations',
-        'Dedicated support',
-        'SLA guarantee'
-      ]" :button="{ label: 'Contact Sales', to: 'mailto:sales@example.com' }" />
+        'Custom chat history',
+        'Webcontainer support w/ live previews'
+      ]" :button="{ label: 'Coming Soon' }" />
     </UPricingGrid>
   </ULandingSection>
 </template>
 
 <script setup lang="ts">
 import { TransitionRoot } from '@headlessui/vue'
+
+// Example landing logos with light and dark mode URLs
+const landingLogos = [
+  { 
+    iconURLLight: './assets/nuxt-ui-light.svg', 
+    iconURLDark: './assets/nuxt-ui-dark.svg', longName: 'Nuxt UI' 
+  },
+  { 
+    iconURLLight: './assets/nuxt-ui-pro-light.svg', 
+    iconURLDark: './assets/nuxt-ui-pro-dark.svg', longName: 'Coming Soon' 
+  }
+]
+
+// Reactive state for dark mode detection
+const colorMode = useColorMode()
 </script>

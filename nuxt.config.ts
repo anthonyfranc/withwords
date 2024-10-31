@@ -2,13 +2,15 @@ export default defineNuxtConfig({
   devtools: {
     enabled: false,
   },
+
   ssr: false,
   extends: ['@nuxt/ui-pro'],
-  modules: ['@nuxt/ui', '@nuxtjs/supabase', '@nuxtjs/google-fonts'],
+  modules: ['@nuxt/ui', '@nuxtjs/supabase', '@nuxtjs/google-fonts', '@nuxt/image'],
 
   fontMetrics: {
     fonts: ['DM Sans']
   },
+
   googleFonts: {
     display: 'swap',
     download: true,
@@ -16,6 +18,7 @@ export default defineNuxtConfig({
       'DM+Sans': [400, 500, 600, 700]
     }
   },
+
   eslint: {
     config: {
       stylistic: {
@@ -24,6 +27,7 @@ export default defineNuxtConfig({
       }
     }
   },
+
   runtimeConfig: {
     stripeSecret: process.env.STRIPE_SECRET_KEY,
     stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
@@ -61,4 +65,6 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  compatibilityDate: '2024-10-31',
 });
