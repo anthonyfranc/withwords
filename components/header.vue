@@ -29,8 +29,7 @@
         </UDropdown>
       </template>
       <template v-else>
-        <UButton to="/auth/login" variant="ghost">Sign In</UButton>
-        <UButton to="/auth/register" color="primary">Sign Up</UButton>
+        <UButton to="/auth/login" variant="solid" color="black" :ui="{ rounded: 'rounded-full' }">Get Started</UButton>
       </template>
       <UColorModeButton />
     </template>

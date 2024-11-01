@@ -3,10 +3,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Section Header -->
       <div class="text-center mb-16">
-        <UBadge color="primary" class="mb-4">Features</UBadge>
+        <UBadge color="primary" class="mb-4" :ui="{'rounded': 'rounded-full'}">Features</UBadge>
         <h2 class="text-4xl font-bold mb-4">Everything you need</h2>
         <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          Powerful features to help you build better UI components faster
+          We provide powerful features to help you build faster
         </p>
       </div>
 
@@ -15,10 +15,7 @@
         <!-- Main Feature -->
         <div class="lg:col-span-2 lg:row-span-2">
           <div class="group h-full">
-            <UCard class="h-full transition-all duration-300 hover:shadow-xl dark:hover:shadow-primary-900/10 relative overflow-hidden">
-              <!-- Gradient Overlay -->
-              <div class="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-purple-600/5 dark:from-primary-500/10 dark:to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-              
+            <UCard class="h-full transition-all duration-300 hover:shadow-none relative overflow-hidden">              
               <div class="h-full flex flex-col">
                 <div class="flex items-center gap-3 mb-4">
                   <UIcon name="i-heroicons-code-bracket" class="w-6 h-6 text-primary-500" />
@@ -58,7 +55,7 @@
         <!-- Secondary Features -->
         <template v-for="feature in features" :key="feature.title">
           <div class="group">
-            <UCard class="h-full transition-all duration-300 hover:shadow-xl dark:hover:shadow-primary-900/10">
+            <UCard class="h-full transition-all duration-300 hover:shadow-none">
               <div class="flex flex-col h-full">
                 <div class="flex items-center gap-3 mb-4">
                   <UIcon :name="feature.icon" class="w-5 h-5 text-primary-500" />

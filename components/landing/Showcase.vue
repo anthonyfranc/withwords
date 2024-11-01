@@ -1,11 +1,19 @@
 <template>
-  <section class="py-24">
+  <section class="py-24 relative"><Gradient class="-mb-28"/>
+    <!-- Radial Blur Effect -->
+    <div class="absolute inset-0 flex items-start justify-start -z-10">
+      <div 
+        class="w-3/4 h-full bg-gradient-radial from-primary-500/20 via-transparent to-transparent dark:from-primary-400/20 blur-[125px]"
+        style="mask-image: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);"
+      />
+    </div>
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <!-- Dashboard Preview -->
         <div class="relative order-2 lg:order-1">
-          <div class="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-purple-600/5 rounded-2xl" />
-          <UCard class="relative border-0 shadow-xl dark:shadow-primary-900/10">
+          <div class="absolute inset-0 bg-gradient-to-br from-primary-500/50 to-purple-600/50 rounded-2xl" />
+          <UCard class="relative border-0 shadow-md dark:shadow-primary-900/10">
             <div class="space-y-4">
               <!-- Dashboard Header -->
               <div class="flex items-center justify-between mb-6">
@@ -40,7 +48,7 @@
                       <UIcon :name="chat.icon" class="w-5 h-5 text-primary-500" />
                       <span class="text-sm">{{ chat.title }}</span>
                     </div>
-                    <UBadge :color="chat.status === 'completed' ? 'green' : 'yellow'" variant="subtle">
+                    <UBadge color="gray" variant="solid">
                       {{ chat.status }}
                     </UBadge>
                   </div>
@@ -77,17 +85,17 @@ const recentChats = [
   {
     title: 'Nuxt UI Navigation Setup',
     icon: 'i-heroicons-code-bracket',
-    status: 'completed'
+    status: '1 day ago'
   },
   {
     title: 'Tailwind Animation Help',
     icon: 'i-heroicons-paint-brush',
-    status: 'in progress'
+    status: '2 weeks ago'
   },
   {
     title: 'Vue Component Optimization',
     icon: 'i-heroicons-cpu-chip',
-    status: 'completed'
+    status: '1 month ago'
   }
 ]
 

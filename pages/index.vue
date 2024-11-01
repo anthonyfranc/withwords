@@ -1,6 +1,6 @@
 <template>
   <!-- Hero Section -->
-  <div class="relative min-h-screen flex flex-col">
+  <div class="relative  flex flex-col">
     <!-- Background Elements -->
     <div class="absolute inset-0 -z-10 overflow-hidden">
       <!-- Base gradient -->
@@ -22,34 +22,14 @@
         <div class="aspect-square h-96 rounded-full bg-gradient-to-br from-purple-600 to-primary-500" />
       </div>
     </div>
-
-    <!-- Navigation -->
-    <nav class="relative border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
-          <div class="flex items-center">
-            <UIcon name="i-heroicons-bolt" class="w-8 h-8 text-primary-500" />
-            <span class="ml-2 text-xl font-bold">withwords</span>
-          </div>
-          <div class="hidden md:flex items-center space-x-8">
-            <a v-for="link in navLinks" :key="link.text" :href="link.href" 
-              class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition">
-              {{ link.text }}
-            </a>
-            <UColorModeButton />
-            <UButton color="black" :ui="{ rounded: 'rounded-full' }">Get Started</UButton>
-          </div>
-        </div>
-      </div>
-    </nav>
     <!-- Hero Content -->
     <div class="flex-1 flex items-center">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
           <div>
-            <div class="inline-flex items-center rounded-full px-4 py-1 text-sm bg-primary-50 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400 mb-6 border border-primary-100 dark:border-primary-800">
+            <div class="inline-flex items-center rounded-full px-4 py-1 text-sm bg-primary-50 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400 mb-6 border border-primary-200 dark:border-primary-800">
               <UIcon name="i-heroicons-sparkles" class="w-4 h-4 mr-2" />
-              <span>AI-Powered Assistance</span>
+              <span>AI-Powered Assistant</span>
             </div>
             <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
               Your AI expert for
@@ -65,7 +45,7 @@
                 Try it Free
                 <UIcon name="i-heroicons-arrow-right" class="ml-2" />
               </UButton>
-              <UButton size="xl" variant="ghost" :ui="{ rounded: 'rounded-full' }">
+              <UButton size="xl" variant="solid" color="white" :ui="{ rounded: 'rounded-full' }">
                 <UIcon name="i-heroicons-play-circle" class="mr-2" />
                 See How It Works
               </UButton>
@@ -155,20 +135,12 @@
   </div>
 
   <!-- New Sections -->
-  <Gradient class="-mb-28"/>
   <LandingFeatures/>
   <LandingShowcase />
   <LandingPricing />
 </template>
 
 <script setup>
-const navLinks = [
-  { text: 'Features', href: '#features' },
-  { text: 'Pricing', href: '#pricing' },
-  { text: 'Documentation', href: '#docs' },
-  { text: 'Blog', href: '#blog' }
-]
-
 const {
   visibleMessages,
   chatContainer,
