@@ -35,7 +35,7 @@ const links = [
   },
   {
     label: 'Contact',
-    to: 'mailto:support@example.com'
+    to: '/contact'
   }
 ]
 

@@ -1,138 +1,244 @@
 <template>
-  <!--Hero-->
-  <ULandingHero :ui="{
-    title: 'sm:text-4xl lg:text-6xl md:text-5xl text-3xl',
-    description: 'font-thin',
-  }" class="m:text-md">
-    <template #headline>
-      <UBadge variant="subtle" size="md"
-        class="hover:bg-primary-100 dark:bg-primary/10 dark:hover:bg-primary/20 transition-color relative font-medium rounded-full shadow-none">
-        <UIcon class="mr-1 w-4 h-4 pointer-events-none" name="i-heroicons-rocket-launch" />
-        <span class="flex items-center gap-1">Beta Launching 2024</span>
-      </UBadge>
-    </template>
-    <template #title>
-      <span
-        class="dark:bg-gradient-to-b dark:from-white dark:via-slate-50 dark:to-slate-400 dark:bg-clip-text dark:text-transparent">
-        Your new go-to for <span class="text-primary-500">UI framework</span> <br />
-        coding answers
-      </span>
-    </template>
-    <template #description>
-      Empower your development with instant, reliable coding insights. No searching, no confusion—just clear,
-      <br class="hidden lg:block" />developer-friendly solutions for mastering UI frameworks.
-    </template>
-    <template #links>
-      <UTooltip text="Coming Soon" :popper="{ placement: 'top', arrow: true }">
-        <UButton label="Get Started" to="/" size="xl" icon="i-heroicons-arrow-right-20-solid" :trailing="true"
-          color="black" :ui="{ rounded: 'rounded-full' }" />
-      </UTooltip>
-    </template>
-    <HeroHomeBg />
-    <TransitionRoot appear :show="true" enter="transition ease-out duration-1000" enter-from="opacity-0"
-      enter-to="opacity-100" leave="transition ease-in duration-1000" leave-from="opacity-100" leave-to="opacity-0">
-      <Gradient class="absolute inset-x-0 top-[1px] w-full block opacity-80" />
-    </TransitionRoot>
-  </ULandingHero>
-  <!--End of Hero-->
-  <!-- Icon Grid-->
-  <ULandingSection class="-mt-32" title="Supported Frameworks" description="Discover the frameworks we support to enhance productivity and streamline your development process.">
-    <ULandingLogos>
-      <div class="flex flex-row flex-wrap gap-10 relative justify-center items-center h-full w-full">
-        <span v-for="(icon, index) in landingLogos" :key="index">
-          <UTooltip :text="icon.longName" :popper="{ arrow: true, placement: 'top' }" :ui="{
-            base: '[@media(pointer:coarse)]:!block h-6 px-1 py-1 text-xs font-normal truncate relative',
-            middot: 'hidden'
-          }" class="h-8">
-            <NuxtImg :src="colorMode.value === 'dark' ? icon.iconURLDark : icon.iconURLLight"
-              :class="['transition duration-300 ease-in-out hover:scale-110 text-xl', { 'grayscale': icon.longName === 'Coming Soon' }]" />
-          </UTooltip>
-        </span>
+  <!-- Hero Section -->
+  <div class="relative min-h-screen flex flex-col">
+    <!-- Background Elements -->
+    <div class="absolute inset-0 -z-10 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-gray-50 via-gray-50 to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950" />
+      <div class="absolute top-0 right-0 -translate-y-12 translate-x-12 blur-3xl opacity-20 dark:opacity-10">
+        <div class="aspect-square h-96 rounded-full bg-gradient-to-br from-primary-500 to-purple-600" />
       </div>
-    </ULandingLogos>
-  </ULandingSection>
-  <!--End of Icon Grid-->
-  <!-- Feature Cards using ULandingCard -->
-  <ULandingSection class="!pt-0">
-    <UPageGrid>
-      <ULandingCard title="Instant Answers" description="Receive quick, precise responses with the help of advanced AI."
-        icon="i-heroicons-bolt" color="primary" />
+      <div class="absolute bottom-0 left-0 translate-y-12 -translate-x-12 blur-3xl opacity-20 dark:opacity-10">
+        <div class="aspect-square h-96 rounded-full bg-gradient-to-br from-purple-600 to-primary-500" />
+      </div>
+    </div>
 
-      <ULandingCard title="Practical Code Snippets"
-        description="Explore ready-to-use code examples that are practical and actionable."
-        icon="i-heroicons-code-bracket" color="primary" />
+    <!-- Navigation -->
+    <nav class="relative border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <UIcon name="i-heroicons-bolt" class="w-8 h-8 text-primary-500" />
+            <span class="ml-2 text-xl font-bold">withwords</span>
+          </div>
+          <div class="hidden md:flex items-center space-x-8">
+            <a v-for="link in navLinks" :key="link.text" :href="link.href" 
+              class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition">
+              {{ link.text }}
+            </a>
+            <UColorModeButton />
+            <UButton color="black" :ui="{ rounded: 'rounded-full' }">Get Started</UButton>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- Hero Content -->
+    <div class="flex-1 flex items-center">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <div class="inline-flex items-center rounded-full px-4 py-1 text-sm bg-primary-50 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400 mb-6 border border-primary-100 dark:border-primary-800">
+              <UIcon name="i-heroicons-sparkles" class="w-4 h-4 mr-2" />
+              <span>AI-Powered Assistance</span>
+            </div>
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
+              Your AI expert for
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-purple-600">
+                UI frameworks
+              </span>
+            </h1>
+            <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl">
+              Get instant, reliable answers for Nuxt UI, Tailwind, and other modern frameworks. Stop searching, start building.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <UButton size="xl" color="black" :ui="{ rounded: 'rounded-full' }">
+                Try it Free
+                <UIcon name="i-heroicons-arrow-right" class="ml-2" />
+              </UButton>
+              <UButton size="xl" variant="ghost" :ui="{ rounded: 'rounded-full' }">
+                <UIcon name="i-heroicons-play-circle" class="mr-2" />
+                See How It Works
+              </UButton>
+            </div>
+            <div class="mt-8 flex items-center gap-6">
+              <div class="flex items-center space-x-4">
+                <div class="flex space-x-3 grayscale">
+                  <NuxtImg src="https://raw.githubusercontent.com/nuxt/modules/main/icons/nuxt.svg" class="w-8 h-8"/>   
+                  <NuxtImg src="https://raw.githubusercontent.com/nuxt/modules/main/icons/radix-vue.svg" class="w-8 h-8"/>  
+                  <NuxtImg src="https://ipx.nuxt.com/s_80,f_auto/gh/nuxt/modules/main/icons/tailwindcss.png" class="w-9 h-9" />
+                </div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">
+                  Supports popular UI frameworks
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="relative lg:block hidden">
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-500/5 to-purple-600/5 dark:from-primary-500/10 dark:to-purple-600/10" />
+            <UCard class="relative border-0 shadow dark:shadow-primary-900/10">
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500" />
+                    <div class="w-3 h-3 rounded-full bg-yellow-500" />
+                    <div class="w-3 h-3 rounded-full bg-green-500" />
+                  </div>
+                  <div class="text-sm text-gray-500">AI Chat</div>
+                </div>
+                <div class="space-y-4">
+                  <!-- Animated Chat Messages -->
+                  <TransitionGroup 
+                    name="chat"
+                    tag="div"
+                    class="space-y-4"
+                  >
+                    <div v-for="message in visibleMessages" 
+                      :key="message.id"
+                      class="flex items-start gap-3"
+                    >
+                      <div class="flex-shrink-0">
+                        <UAvatar
+                          :icon="message.isUser ? 'ooui:user-avatar' : 'mingcute:sparkles-2-fill'"
+                          size="sm"
+                          :class="message.isUser ? '' : 'bg-gray-200'"
+                          :alt="message.isUser ? 'User' : 'AI'"
+                        />
+                      </div>
+                      <div :class="[
+                        'rounded-lg p-3 text-sm',
+                        message.isUser ? 'bg-gray-100 dark:bg-gray-800' : 'bg-primary-50 dark:bg-primary-900/50'
+                      ]">
+                        <span v-if="message.isTyping" class="typing-animation">
+                          <span class="dot"></span>
+                          <span class="dot"></span>
+                          <span class="dot"></span>
+                        </span>
+                        <template v-else>
+                          <div v-if="message.code" class="space-y-2">
+                            {{ message.text }}
+                            <UCard class="!mt-2 !mb-0 text-xs border border-primary-100 dark:border-primary-800">
+                              <pre class="!mt-0 !mb-0"><code>{{ message.code }}</code></pre>
+                            </UCard>
+                          </div>
+                          <div v-else>{{ message.text }}</div>
+                        </template>
+                      </div>
+                    </div>
+                  </TransitionGroup>
+                </div>
+              </div>
+            </UCard>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-      <ULandingCard title="Relevant Solutions"
-        description="Find accurate, context-specific answers tailored to your coding needs." icon="i-heroicons-eye"
-        color="primary" />
-      <ULandingCard title="Detailed Explanations"
-        description="Learn not just the 'how' but also the 'why' with in-depth solution insights."
-        icon="i-heroicons-book-open" color="primary" />
-
-      <ULandingCard title="Personalized Assistance"
-        description="Get responses tailored to your unique coding challenges and framework preferences."
-        icon="i-heroicons-user" color="primary" />
-
-      <ULandingCard title="Error Troubleshooting"
-        description="Quickly identify and resolve coding errors with targeted support."
-        icon="i-heroicons-exclamation-circle" color="primary" />
-
-    </UPageGrid>
-  </ULandingSection>
-
-  <!-- Pricing Section using UPricingGrid and UPricingCard -->
-  <UPageHero align="center">
-    <template #title>
-      Get answers without <span class="font-bold text-primary-500">breaking</span> the bank
-    </template>
-    <template #description>
-      We provide developer friendly solutions with pricing plans for all needs, <br class="hidden lg:block" /> and a
-      free tier for all users.
-    </template>
-  </UPageHero>
-  <ULandingSection class="!pt-0" id="pricing">
-    <UPricingGrid compact>
-      <UPricingCard title="Free" description="Perfect for getting started" price="$0" cycle="/month" :highlight="false"
-        :features="[
-          '25 messages per month',
-          'Basic chat features',
-          'Community support'
-        ]" :button="{ label: 'Get Started', to: '/auth/register' }" />
-
-      <UPricingCard title="Indie" description="Perfect for small developers" price="$10" cycle="/month"
-        :highlight="true" :scale="true" :features="[
-          '500 messages per month',
-          'Advanced chat features',
-          'Custom chat history',
-          'Priority support',
-        ]" :button="{ label: 'Coming Soon', color: 'primary' }" :badge="{ label: 'Popular' }" />
-
-      <UPricingCard title="Expert" description="Enough power to help you build" price="$25" cycle="/month"
-        :highlight="false" :features="[
-          'Unlimited messages',
-          'Advanced chat features',
-          'Custom chat history',
-          'Webcontainer support w/ live previews'
-        ]" :button="{ label: 'Coming Soon' }" />
-    </UPricingGrid>
-  </ULandingSection>
+  <!-- New Sections -->
+  <Gradient class="-mb-28"/>
+  <LandingFeatures/>
+  <LandingShowcase />
+  <LandingPricing />
 </template>
 
-<script setup lang="ts">
-import { TransitionRoot } from '@headlessui/vue'
-
-// Example landing logos with light and dark mode URLs
-const landingLogos = [
-  {
-    iconURLLight: './assets/nuxt-ui-light.svg',
-    iconURLDark: './assets/nuxt-ui-dark.svg', longName: 'Nuxt UI'
-  },
-  {
-    iconURLLight: './assets/nuxt-ui-pro-light.svg',
-    iconURLDark: './assets/nuxt-ui-pro-dark.svg', longName: 'Coming Soon'
-  }
+<script setup>
+const navLinks = [
+  { text: 'Features', href: '#features' },
+  { text: 'Pricing', href: '#pricing' },
+  { text: 'Documentation', href: '#docs' },
+  { text: 'Blog', href: '#blog' }
 ]
 
-// Reactive state for dark mode detection
-const colorMode = useColorMode()
+// Chat simulation data
+const messages = [
+  {
+    id: 1,
+    isUser: true,
+    text: "How do I create a responsive navbar with Nuxt UI?",
+  },
+  {
+    id: 2,
+    isUser: false,
+    text: "Here's a responsive navbar using Nuxt UI components:",
+    code: `<UHeader :links="links">
+  <template #logo>
+    <NuxtLink to="/">
+      My App
+    </NuxtLink>
+  </template>
+  
+  <template #right>
+    <UButton>
+      Sign In
+    </UButton>
+  </template>
+</UHeader>`
+  },
+]
+
+// Control visible messages for animation
+const visibleMessages = ref([])
+const currentIndex = ref(0)
+
+// Function to simulate typing
+const simulateTyping = async (message, delay = 1000) => {
+  // Show typing indicator
+  visibleMessages.value.push({ ...message, isTyping: true })
+  
+  // Wait for typing animation
+  await new Promise(resolve => setTimeout(resolve, delay))
+  
+  // Replace typing indicator with actual message
+  const index = visibleMessages.value.length - 1
+  visibleMessages.value[index] = message
+}
+
+// Start chat animation on mount
+onMounted(async () => {
+  for (const message of messages) {
+    await simulateTyping(message, message.isUser ? 800 : 1200)
+  }
+})
+
+definePageMeta({
+  layout: 'default'
+})
 </script>
+
+<style scoped>
+.chat-enter-active,
+.chat-leave-active {
+  transition: all 0.3s ease;
+}
+
+.chat-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.chat-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.typing-animation {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  background-color: currentColor;
+  border-radius: 50%;
+  animation: bounce 1.4s infinite ease-in-out;
+}
+
+.dot:nth-child(1) { animation-delay: -0.32s; }
+.dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+</style>
