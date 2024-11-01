@@ -3,7 +3,18 @@
   <div class="relative min-h-screen flex flex-col">
     <!-- Background Elements -->
     <div class="absolute inset-0 -z-10 overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-gray-50 via-gray-50 to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950" />
+      <!-- Base gradient -->
+      <div class="absolute inset-0" />
+      
+      <!-- Radial blur effect -->
+      <div class="absolute inset-0 flex items-left justify-left">
+        <div 
+          class="w-3/4 h-full bg-gradient-radial from-primary-500/50 via-transparent to-transparent dark:from-primary-400/20 gpu dark:blur-[125px] blur-[125px]"
+          style="mask-image: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);"
+        />
+      </div>
+      
+      <!-- Accent gradients -->
       <div class="absolute top-0 right-0 -translate-y-12 translate-x-12 blur-3xl opacity-20 dark:opacity-10">
         <div class="aspect-square h-96 rounded-full bg-gradient-to-br from-primary-500 to-purple-600" />
       </div>
@@ -42,7 +53,7 @@
             </div>
             <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
               Your AI expert for
-              <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-purple-600">
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-500">
                 UI frameworks
               </span>
             </h1>
@@ -84,46 +95,56 @@
                   </div>
                   <div class="text-sm text-gray-500">AI Chat</div>
                 </div>
-                <div class="space-y-4">
-                  <!-- Animated Chat Messages -->
-                  <TransitionGroup 
-                    name="chat"
-                    tag="div"
-                    class="space-y-4"
+                <!-- Chat Container -->
+                <div class="relative">
+                  <!-- Top Fade -->
+                  <div class="absolute top-0 left-0 right-0 h-6 bg-gradient-to-b from-white dark:from-gray-900 to-transparent z-10" />
+                  
+                  <!-- Chat Messages -->
+                  <div 
+                    ref="chatContainer"
+                    class="h-[400px] overflow-y-auto hide-scrollbar"
                   >
-                    <div v-for="message in visibleMessages" 
-                      :key="message.id"
-                      class="flex items-start gap-3"
+                    <TransitionGroup 
+                      name="chat"
+                      tag="div"
+                      class="space-y-4 px-2 pt-5 pb-5"
                     >
-                      <div class="flex-shrink-0">
-                        <UAvatar
-                          :icon="message.isUser ? 'ooui:user-avatar' : 'mingcute:sparkles-2-fill'"
-                          size="sm"
-                          :class="message.isUser ? '' : 'bg-gray-200'"
-                          :alt="message.isUser ? 'User' : 'AI'"
-                        />
+                      <div v-for="message in visibleMessages" 
+                        :key="message.id"
+                        class="flex items-start gap-3"
+                      >
+                        <div class="flex-shrink-0">
+                          <UAvatar
+                            :icon="message.isUser ? 'ooui:user-avatar' : 'mingcute:sparkles-2-fill'"
+                            size="sm"
+                            :class="message.isUser ? '' : 'bg-gray-200'"
+                            :alt="message.isUser ? 'User' : 'AI'"
+                          />
+                        </div>
+                        <div :class="[
+                          'rounded-lg p-3 text-sm',
+                          message.isUser ? 'bg-gray-100 dark:bg-gray-800' : 'bg-primary-50 dark:bg-primary-900/50'
+                        ]">
+                          <span v-if="message.isTyping" class="typing-animation">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                          </span>
+                          <template v-else>
+                            <div v-if="message.code" class="space-y-2">
+                              {{ message.text }}
+                              <UCard class="!mt-2 !mb-0 text-xs border border-primary-100 dark:border-primary-800">
+                                <pre class="!mt-0 !mb-0"><code>{{ message.code }}</code></pre>
+                              </UCard>
+                            </div>
+                            <div v-else>{{ message.text }}</div>
+                          </template>
+                        </div>
                       </div>
-                      <div :class="[
-                        'rounded-lg p-3 text-sm',
-                        message.isUser ? 'bg-gray-100 dark:bg-gray-800' : 'bg-primary-50 dark:bg-primary-900/50'
-                      ]">
-                        <span v-if="message.isTyping" class="typing-animation">
-                          <span class="dot"></span>
-                          <span class="dot"></span>
-                          <span class="dot"></span>
-                        </span>
-                        <template v-else>
-                          <div v-if="message.code" class="space-y-2">
-                            {{ message.text }}
-                            <UCard class="!mt-2 !mb-0 text-xs border border-primary-100 dark:border-primary-800">
-                              <pre class="!mt-0 !mb-0"><code>{{ message.code }}</code></pre>
-                            </UCard>
-                          </div>
-                          <div v-else>{{ message.text }}</div>
-                        </template>
-                      </div>
-                    </div>
-                  </TransitionGroup>
+                    </TransitionGroup>
+                  </div>
+                  <div class="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-white dark:from-gray-900 to-transparent z-10" />
                 </div>
               </div>
             </UCard>
@@ -148,55 +169,15 @@ const navLinks = [
   { text: 'Blog', href: '#blog' }
 ]
 
-// Chat simulation data
-const messages = [
-  {
-    id: 1,
-    isUser: true,
-    text: "How do I create a responsive navbar with Nuxt UI?",
-  },
-  {
-    id: 2,
-    isUser: false,
-    text: "Here's a responsive navbar using Nuxt UI components:",
-    code: `<UHeader :links="links">
-  <template #logo>
-    <NuxtLink to="/">
-      My App
-    </NuxtLink>
-  </template>
-  
-  <template #right>
-    <UButton>
-      Sign In
-    </UButton>
-  </template>
-</UHeader>`
-  },
-]
-
-// Control visible messages for animation
-const visibleMessages = ref([])
-const currentIndex = ref(0)
-
-// Function to simulate typing
-const simulateTyping = async (message, delay = 1000) => {
-  // Show typing indicator
-  visibleMessages.value.push({ ...message, isTyping: true })
-  
-  // Wait for typing animation
-  await new Promise(resolve => setTimeout(resolve, delay))
-  
-  // Replace typing indicator with actual message
-  const index = visibleMessages.value.length - 1
-  visibleMessages.value[index] = message
-}
+const {
+  visibleMessages,
+  chatContainer,
+  startChatAnimation
+} = useHeroChat()
 
 // Start chat animation on mount
-onMounted(async () => {
-  for (const message of messages) {
-    await simulateTyping(message, message.isUser ? 800 : 1200)
-  }
+onMounted(() => {
+  startChatAnimation()
 })
 
 definePageMeta({
@@ -240,5 +221,14 @@ definePageMeta({
 @keyframes bounce {
   0%, 80%, 100% { transform: scale(0); }
   40% { transform: scale(1); }
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 </style>
