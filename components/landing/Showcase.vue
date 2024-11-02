@@ -1,19 +1,25 @@
 <template>
-  <section class="py-24 relative"><Gradient class="-mb-28"/>
-    <!-- Radial Blur Effect -->
-    <div class="absolute inset-0 flex items-start justify-start -z-10">
-      <div 
-        class="w-3/4 h-full bg-gradient-radial from-primary-500/20 via-transparent to-transparent dark:from-primary-400/20 blur-[125px]"
-        style="mask-image: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);"
-      />
+  <section class="relative pb-24 overflow-hidden">
+    <!-- Improved radial blur effect with responsive positioning -->
+    <div class="absolute inset-0 w-full h-full pointer-events-none">
+      <Gradient/>
+      <div
+        class="absolute inset-0 w-full h-full bg-gradient-radial from-primary-500/5 via-transparent to-transparent dark:from-primary-400/5 gpu blur-[125px]"
+        style="
+          mask-image: radial-gradient(circle at 25% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
+          -webkit-mask-image: radial-gradient(circle at 25% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
+        " />
+        <div
+          class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t dark:from-gray-900 dark:from-gray-900 to-transparent">
+        </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative py-36">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <!-- Dashboard Preview -->
         <div class="relative order-2 lg:order-1">
-          <div class="absolute inset-0 bg-gradient-to-br from-primary-500/50 to-purple-600/50 rounded-2xl" />
-          <UCard class="relative border-0 shadow-md dark:shadow-primary-900/10">
+          <div class="absolute inset-0 rounded-2xl" />
+          <UCard class="relative border-0 shadow-sm dark:shadow-primary-900/10">
             <div class="space-y-4">
               <!-- Dashboard Header -->
               <div class="flex items-center justify-between mb-6">
@@ -42,7 +48,7 @@
               <div>
                 <div class="text-sm text-gray-500 mb-3">Recent Conversations</div>
                 <div class="space-y-2">
-                  <div v-for="chat in recentChats" :key="chat.title" 
+                  <div v-for="chat in recentChats" :key="chat.title"
                     class="flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
                     <div class="flex items-center space-x-3">
                       <UIcon :name="chat.icon" class="w-5 h-5 text-primary-500" />
@@ -122,3 +128,13 @@ const features = [
   }
 ]
 </script>
+
+<style scoped>
+/* Add responsive styles for the gradient positioning */
+@media (max-width: 768px) {
+  .bg-gradient-radial {
+    mask-image: radial-gradient(circle at 50% 25%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 70%) !important;
+    -webkit-mask-image: radial-gradient(circle at 50% 25%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 70%) !important;
+  }
+}
+</style>
