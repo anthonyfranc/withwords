@@ -3,15 +3,6 @@
     <!-- Improved radial blur effect with responsive positioning -->
     <div class="absolute inset-0 w-full h-full pointer-events-none">
       <Gradient/>
-      <div
-        class="absolute inset-0 w-full h-full bg-gradient-radial from-primary-500/5 via-transparent to-transparent dark:from-primary-400/5 gpu blur-[125px]"
-        style="
-          mask-image: radial-gradient(circle at 25% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
-          -webkit-mask-image: radial-gradient(circle at 25% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
-        " />
-        <div
-          class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t dark:from-gray-900 dark:from-gray-900 to-transparent">
-        </div>
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative py-36">

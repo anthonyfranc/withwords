@@ -1,75 +1,50 @@
 <template>
-  <section class="py-24 bg-white dark:bg-gray-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Section Header -->
-      <div class="text-center mb-16">
-        <UBadge color="primary" class="mb-4">Pricing</UBadge>
-        <h2 class="text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
-        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          Choose the perfect plan for your development needs.
-        </p>
+  <ULandingSection
+    title="Simple, Transparent Pricing"
+    description="Choose the perfect plan for your development needs"
+  >
+    <UPricingGrid compact>
+      <UPricingCard
+        v-for="plan in plans"
+        :key="plan.name"
+        v-bind="plan"
+        @click="selectPlan(plan)"
+      />
+    </UPricingGrid>
+
+    <!-- FAQ Section -->
+    <template #extra>
+      <div class="mt-24 max-w-3xl mx-auto">
+        <h3 class="text-2xl font-bold text-center mb-8">Frequently Asked Questions</h3>
+        <UAccordion
+          :items="faqs"
+          :ui="{
+            item: {
+              padding: 'py-4',
+              rounded: 'rounded-none',
+              gap: 'gap-4'
+            },
+            default: {
+              class: 'divide-y divide-gray-200 dark:divide-gray-800'
+            }
+          }"
+        />
       </div>
-
-      <!-- Pricing Cards -->
-      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-        <div v-for="plan in plans" :key="plan.name"
-          class="relative">
-          <UCard
-            :class="[
-              'h-full transition-all duration-300 hover:scale-[1.02]',
-              plan.popular ? 'border-primary-500 dark:border-primary-400' : ''
-            ]"
-          >
-            <template #header>
-              <div class="text-center">
-                <h3 class="text-2xl font-bold">{{ plan.name }}</h3>
-                <div class="mt-2 text-gray-600 dark:text-gray-400">{{ plan.description }}</div>
-              </div>
-            </template>
-
-            <div class="text-center my-8">
-              <span class="text-4xl font-bold">{{ plan.price }}</span>
-              <span class="text-gray-600 dark:text-gray-400">/month</span>
-            </div>
-
-            <ul class="space-y-4 mb-8">
-              <li v-for="feature in plan.features" :key="feature"
-                class="flex items-center gap-3">
-                <UIcon name="i-heroicons-check-circle" class="w-5 h-5 text-primary-500" />
-                <span>{{ feature }}</span>
-              </li>
-            </ul>
-
-            <template #footer>
-              <UButton
-                :color="plan.popular ? 'primary' : 'gray'"
-                block
-                :ui="{ rounded: 'rounded-full' }"
-              >
-                {{ plan.buttonText }}
-              </UButton>
-            </template>
-          </UCard>
-          <UBadge
-            v-if="plan.popular"
-            color="primary"
-            class="absolute -top-3 left-1/2 transform -translate-x-1/2"
-          >
-            Most Popular
-          </UBadge>
-        </div>
-      </div>
-    </div>
-  </section>
+    </template>
+  </ULandingSection>
 </template>
 
 <script setup>
 const plans = [
   {
-    name: 'Starter',
+    title: 'Free',
     description: 'Perfect for getting started',
     price: '$0',
-    buttonText: 'Get Started',
+    cycle: '/month',
+    button: {
+     color: 'white',
+     label: 'Get Started'
+    },
     features: [
       '100 messages per month',
       'Basic code generation',
@@ -78,11 +53,18 @@ const plans = [
     ]
   },
   {
-    name: 'Pro',
+    title: 'Pro',
     description: 'For serious developers',
     price: '$29',
-    buttonText: 'Start Free Trial',
-    popular: true,
+    cycle: '/month',
+    badge: {
+      label: 'Most Popular'
+    },
+    button: {
+      label: 'Coming Soon'
+    },
+    scale: true,
+    highlight: true,
     features: [
       'Unlimited messages',
       'Advanced code generation',
@@ -92,17 +74,57 @@ const plans = [
     ]
   },
   {
-    name: 'Team',
-    description: 'For development teams',
-    price: '$99',
-    buttonText: 'Contact Sales',
+    title: 'Enterprise',
+    description: 'For large teams',
+    price: 'Contact Us',
+    button:{
+      color: 'white',
+      label: 'Contact Sales'
+    },
     features: [
       'Everything in Pro',
       'Team collaboration',
       'Custom integrations',
       'Advanced analytics',
-      'Enterprise support'
+      'Enterprise support',
+      'SLA guarantee'
     ]
   }
 ]
+
+const faqs = [
+  {
+    label: 'What happens when I reach my monthly message limit?',
+    content: 'On the Free plan, you\'ll be notified when you reach your limit. You can upgrade to the Pro plan for unlimited messages or wait until your limit resets next month.',
+    icon: 'i-heroicons-question-mark-circle'
+  },
+  {
+    label: 'Can I switch between plans?',
+    content: 'Yes, you can upgrade, downgrade, or cancel your plan at any time. Changes take effect at the start of your next billing cycle.',
+    icon: 'i-heroicons-arrows-right-left'
+  },
+  {
+    label: 'Do you offer a free trial of the Pro plan?',
+    content: 'Yes, we offer a 14-day free trial of the Pro plan. No credit card required. You can try all Pro features without any commitment.',
+    icon: 'i-heroicons-clock'
+  },
+  {
+    label: 'What payment methods do you accept?',
+    content: 'We accept all major credit cards (Visa, MasterCard, American Express) and PayPal. Enterprise customers can also pay by invoice.',
+    icon: 'i-heroicons-credit-card'
+  },
+  {
+    label: 'Is there a long-term contract?',
+    content: 'No, all our plans are month-to-month. You can cancel at any time without any cancellation fees or penalties.',
+    icon: 'i-heroicons-document-text'
+  }
+]
+
+const selectPlan = (plan) => {
+  if (plan.name === 'Enterprise') {
+    navigateTo('/contact')
+  } else {
+    navigateTo('/auth/register')
+  }
+}
 </script>
