@@ -9,7 +9,7 @@
       <!-- Radial blur effect -->
       <div class="absolute inset-0 flex items-left justify-left">
         <div
-          class="w-4/6 h-full bg-gradient-radial from-primary-500/20 via-transparent to-transparent dark:from-primary-400/20 gpu dark:blur-[125px] blur-[125px]"
+          class="w-4/6 h-full bg-gradient-radial from-primary-500/50 via-transparent to-transparent dark:from-primary-400/20 gpu dark:blur-[125px] blur-[125px]"
           style="mask-image: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);">
         </div>
         <!-- Add bottom fade overlay -->

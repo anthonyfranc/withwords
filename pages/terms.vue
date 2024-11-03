@@ -164,13 +164,15 @@
         <div class="mt-8 flex gap-4">
           <UButton
             to="/privacy"
-            variant="ghost"
+            color="black"
+            variant="solid"
           >
             Privacy Policy
           </UButton>
           <UButton
             to="/contact"
-            variant="ghost"
+            color="black"
+            variant="solid"
           >
             Contact Us
           </UButton>

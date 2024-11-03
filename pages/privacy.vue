@@ -138,7 +138,8 @@
         <div class="mt-8">
           <UButton
             to="/contact"
-            variant="ghost"
+            color="black"
+            variant="solid"
           >
             Contact Us
           </UButton>

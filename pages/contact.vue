@@ -4,7 +4,6 @@
     <div class="relative py-12 lg:py-16">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
-          <UBadge color="primary" class="mb-4">Contact Us</UBadge>
           <h1 class="text-4xl font-bold mb-4">Get in Touch</h1>
           <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Have questions? We're here to help. Send us a message and we'll respond as soon as possible.
@@ -40,22 +39,6 @@
               </div>
             </div>
           </UCard>
-
-          <!-- Social Links -->
-          <div class="pt-6">
-            <h3 class="text-sm font-medium text-gray-900 dark:text-gray-100 mb-4">Follow us</h3>
-            <div class="flex space-x-4">
-              <UButton
-                v-for="social in socialLinks"
-                :key="social.name"
-                :href="social.url"
-                target="_blank"
-                color="gray"
-                variant="ghost"
-                :icon="social.icon"
-              />
-            </div>
-          </div>
         </div>
 
         <!-- Contact Form -->
@@ -142,41 +125,11 @@ const contactInfo = [
     linkText: 'support@example.com'
   },
   {
-    icon: 'i-heroicons-chat-bubble-left-right',
-    title: 'Live Chat',
-    description: 'Available Monday to Friday, 9AM to 5PM EST.',
-    link: '#',
-    linkText: 'Start a conversation'
-  },
-  {
     icon: 'i-heroicons-document-text',
     title: 'Documentation',
     description: 'Find answers in our detailed documentation.',
     link: '/docs',
     linkText: 'Visit Documentation'
-  }
-]
-
-const socialLinks = [
-  {
-    name: 'GitHub',
-    url: 'https://github.com',
-    icon: 'i-simple-icons-github'
-  },
-  {
-    name: 'Twitter',
-    url: 'https://twitter.com',
-    icon: 'i-simple-icons-twitter'
-  },
-  {
-    name: 'Discord',
-    url: 'https://discord.com',
-    icon: 'i-simple-icons-discord'
-  },
-  {
-    name: 'LinkedIn',
-    url: 'https://linkedin.com',
-    icon: 'i-simple-icons-linkedin'
   }
 ]
 
