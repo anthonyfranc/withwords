@@ -9,7 +9,7 @@
         />
         <div 
           class="relative h-7 overflow-hidden transition-all duration-500"
-          :class="{ 'w-0 opacity-0': wordsHidden, 'w-20 -mr-[19px] -mt-0.5 opacity-100': !wordsHidden }"
+          :class="{ 'w-0 opacity-0': wordsHidden, 'w-20 -mr-[19px] mt-[0.5px] opacity-100': !wordsHidden }"
         >
           <div class="words font-bold text-2xl">
             <span class="word">code.</span>
@@ -17,11 +17,11 @@
             <span class="word">build.</span>
           </div>
         </div>
-        <span class="font-thin text-2xl transition-all duration-500"
-          :class="{ '-ml-1 mt-[2.5px]': wordsHidden }">
+        <span class="font-thin mt-[3.5px] text-2xl transition-all duration-500"
+          :class="{ '-ml-1 mt-[3.5px]': wordsHidden }">
           with
         </span>
-        <span class="font-bold text-2xl -ml-2">
+        <span class="font-bold text-2xl -ml-2 mt-[3px]">
           words
         </span>
       </NuxtLink>
