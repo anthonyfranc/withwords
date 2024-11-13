@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxthub/core",
     "@nuxt/eslint",
+    "@nuxtjs/html-validator",
   ],
   googleFonts: {
     display: "swap",
