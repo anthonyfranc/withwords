@@ -1,33 +1,19 @@
 export default defineNuxtConfig({
-  devtools: {
-    enabled: false,
-  },
-
-  ssr: false,
-  extends: ['@nuxt/ui-pro'],
-  modules: ['@nuxt/ui', '@nuxtjs/supabase', '@nuxtjs/google-fonts', '@nuxt/image'],
-
-  fontMetrics: {
-    fonts: ['DM Sans']
-  },
-
+  extends: ["@nuxt/ui-pro"],
+  modules: [
+    "@nuxt/ui",
+    "@nuxtjs/google-fonts",
+    "@nuxt/image",
+    "@nuxthub/core",
+    "@nuxt/eslint",
+  ],
   googleFonts: {
-    display: 'swap',
+    display: "swap",
     download: true,
     families: {
-      'DM+Sans': [400, 500, 600, 700]
-    }
+      "DM+Sans": [400, 500, 600, 700],
+    },
   },
-
-  eslint: {
-    config: {
-      stylistic: {
-        commaDangle: 'never',
-        braceStyle: '1tbs'
-      }
-    }
-  },
-
   runtimeConfig: {
     stripeSecret: process.env.STRIPE_SECRET_KEY,
     stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
@@ -37,34 +23,18 @@ export default defineNuxtConfig({
       stripeKey: process.env.NUXT_PUBLIC_STRIPE_KEY,
     },
   },
-
-  supabase: {
-    key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2aHllcWRnbmJ1dWdnbGNlcmlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzAzMDU1MjMsImV4cCI6MjA0NTg4MTUyM30.1DaLP7a2s4o-RWsvB9RZbjOstSS0DakUUtiCyV_Ir_o',
-    url: 'https://avhyeqdgnbuugglcerig.supabase.co',
-    redirectOptions: {
-      login: '/auth/login',
-      callback: '/auth/callback',
-      exclude: ['/', '/pricing', '/terms', '/auth/register', '/contact', '/privacy'],
-    },
-    cookieOptions: {
-      maxAge: 60 * 60 * 8, // 8 hours
-      sameSite: 'lax',
-      secure: true
-    },
-    clientOptions: {
-      auth: {
-        flowType: 'pkce',
-        detectSessionInUrl: true,
-        persistSession: true,
-        autoRefreshToken: true
-      },
-      realtime: {
-        params: {
-          eventsPerSecond: 2,
-        },
+  devtools: { enabled: true },
+  future: { compatibilityVersion: 4 },
+  compatibilityDate: "2024-10-31",
+  hub: {
+    database: true,
+    kv: true,
+  },
+  eslint: {
+    config: {
+      stylistic: {
+        quotes: "single",
       },
     },
   },
-
-  compatibilityDate: '2024-10-31',
 });

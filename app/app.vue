@@ -10,9 +10,7 @@
 </template>
 
 <script setup>
-const user = useSupabaseUser()
-const client = useSupabaseClient()
-
+const { signOut, loggedIn } = useAuth()
 const headerLinks = [
   {
     label: 'Chat',
@@ -28,25 +26,10 @@ const headerLinks = [
 
 const handleLogout = async () => {
   try {
-    await client.auth.signOut()
+    await signOut()
     navigateTo('/auth/login')
   } catch (error) {
     console.error('Logout error:', error)
   }
 }
-
-// Initialize auth state
-onMounted(async () => {
-  try {
-    const { data: { session }, error } = await client.auth.getSession()
-    if (error) throw error
-    
-    // Update user state if session exists
-    if (session?.user) {
-      user.value = session.user
-    }
-  } catch (error) {
-    console.error('Session initialization error:', error)
-  }
-})
 </script>

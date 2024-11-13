@@ -26,7 +26,7 @@
                 <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
                   <div class="text-sm text-gray-500 mb-1">Messages</div>
                   <div class="text-2xl font-bold">2,451</div>
-                  <UProgress value="70" color="primary" class="mt-2" />
+                  <UProgress :value="70" color="primary" class="mt-2" />
                 </div>
                 <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
                   <div class="text-sm text-gray-500 mb-1">Saved Time</div>

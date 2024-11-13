@@ -1,4 +1,4 @@
-<template>
+<template>{{ useAuth }}
   <UHeader :links="links">
     <template #logo>
       <NuxtLink to="/" class="flex items-center gap-x-2">
@@ -28,7 +28,7 @@
     </template>
 
     <template #right>
-      <template v-if="user">
+      <template v-if="loggedIn">
         <UDropdown
           :items="userMenuItems"
           :popper="{ placement: 'bottom-end' }"
@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+const { signOut, loggedIn } = useAuth()
 
 const props = defineProps({
   links: {
@@ -69,7 +69,7 @@ const props = defineProps({
     default: () => []
   },
   user: {
-    type: Object,
+    type: Boolean,
     default: null
   }
 });
@@ -112,7 +112,7 @@ const userMenuItems = [
 
 async function logout() {
   try {
-    const { error } = await useSupabaseClient().auth.signOut();
+    const { error } = await await signOut()
     const toast = useToast();
     toast.add({
       title: 'Notification',

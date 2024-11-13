@@ -1,4 +1,5 @@
-import { ChatMessage, ChatbaseResponse, useChatbase } from '~/utils/chatbase'
+import type { ChatMessage, ChatbaseResponse } from '~/utils/chatbase'
+import { useChatbase } from '~/utils/chatbase'
 import { markRaw } from 'vue'
 
 export interface Message {
