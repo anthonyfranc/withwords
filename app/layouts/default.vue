@@ -1,9 +1,9 @@
 <template>
-  <Header :user="loggedIn" @logout="signOut" />
+  <Header :user="user" @logout="signOut" />
   <slot />
   <Footer />
 </template>
 
 <script setup lang="ts">
-const { signOut, loggedIn } = useAuth()
+const { signOut, loggedIn, user } = useAuth()
 </script>

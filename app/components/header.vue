@@ -1,4 +1,4 @@
-<template>{{ useAuth }}
+<template>
   <UHeader :links="links">
     <template #logo>
       <NuxtLink to="/" class="flex items-center gap-x-2">
@@ -69,7 +69,7 @@ const props = defineProps({
     default: () => []
   },
   user: {
-    type: Boolean,
+    type: Object,
     default: null
   }
 });
