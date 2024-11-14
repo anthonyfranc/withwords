@@ -8,28 +8,3 @@
     <UModals />
   </UMain>
 </template>
-
-<script setup>
-const { signOut, loggedIn } = useAuth()
-const headerLinks = [
-  {
-    label: 'Chat',
-    to: '/chat',
-    icon: 'i-heroicons-chat-bubble-left-right'
-  },
-  {
-    label: 'Pricing',
-    to: '/pricing',
-    icon: 'i-heroicons-currency-dollar'
-  }
-]
-
-const handleLogout = async () => {
-  try {
-    await signOut()
-    navigateTo('/auth/login')
-  } catch (error) {
-    console.error('Logout error:', error)
-  }
-}
-</script>

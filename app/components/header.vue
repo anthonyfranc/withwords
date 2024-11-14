@@ -69,7 +69,7 @@ const props = defineProps({
     default: () => []
   },
   user: {
-    type: Object,
+    type: [Object, null],
     default: null
   }
 });
