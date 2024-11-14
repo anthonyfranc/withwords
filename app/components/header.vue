@@ -1,7 +1,7 @@
 <template>
-  <UHeader :links="links">
+  <UHeader>
     <template #logo>
-      <NuxtLink to="/" class="flex items-center gap-x-2">
+      <div class="flex items-center gap-x-2">
         <UIcon 
           name="solar:bolt-bold" 
           class="w-6 h-6 mt-1 -mr-3 text-primary-500 transition-transform duration-500"
@@ -11,11 +11,11 @@
           class="relative h-7 overflow-hidden transition-all duration-500"
           :class="{ 'w-0 opacity-0': wordsHidden, 'w-20 -mr-[19px] mt-[0.5px] opacity-100': !wordsHidden }"
         >
-          <div class="words font-bold text-2xl">
+          <span class="words font-bold text-2xl">
             <span class="word">code.</span>
             <span class="word">learn.</span>
             <span class="word">build.</span>
-          </div>
+          </span>
         </div>
         <span class="font-thin mt-[3.5px] text-2xl transition-all duration-500"
           :class="{ '-ml-1 mt-[3.5px]': wordsHidden }">
@@ -24,7 +24,7 @@
         <span class="font-bold text-2xl -ml-2 mt-[3px]">
           words
         </span>
-      </NuxtLink>
+      </div>
     </template>
 
     <template #right>
