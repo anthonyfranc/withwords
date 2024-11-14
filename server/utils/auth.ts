@@ -8,7 +8,7 @@ export function serverAuth() {
     _auth = betterAuth({
       database: {
         dialect: new D1Dialect({
-          database: hubDatabase(),
+          database: hubDatabase() as any,
         }),
         type: 'sqlite',
       },
