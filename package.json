@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@atinux/kysely-d1": "^0.3.1",
+    "@nuxt/eslint": "latest",
     "@nuxt/image": "^1.8.1",
     "@nuxt/ui": "latest",
     "@nuxt/ui-pro": "latest",
