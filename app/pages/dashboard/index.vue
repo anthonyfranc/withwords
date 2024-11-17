@@ -111,7 +111,10 @@
 
 <script setup>
 definePageMeta({
-  middleware: 'auth'
+  auth: {
+    only: "user",
+    redirectGuestTo: "/",
+  }
 })
 
 const messageCount = ref(0)

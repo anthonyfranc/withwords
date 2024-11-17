@@ -28,32 +28,37 @@ declare module 'vue-router' {
 }
 
 export default defineNuxtRouteMiddleware(async (to) => {
-  // If auth is disabled, skip middleware
   if (to.meta?.auth === false) {
-    return
-  }
-  const { loggedIn, options, fetchSession } = useAuth()
-  const { only, redirectUserTo, redirectGuestTo } = defu(to.meta?.auth, options)
-
-  // If guest mode, redirect if authenticated
-  if (only === 'guest' && loggedIn.value) {
-    // Avoid infinite redirect
-    if (to.path === redirectUserTo) {
-      return
-    }
-    return navigateTo(redirectUserTo)
+    return;
   }
 
-  // If client-side, fetch session between each navigation
+  const { loggedIn, options, fetchSession } = useAuth();
+  const {
+    only,
+    redirectUserTo = '/dashboard',
+    redirectGuestTo = '/login', // Default fallback
+  } = defu(to.meta?.auth, options);
+
+  // Fetch session for client-side navigation
   if (import.meta.client) {
-    await fetchSession()
+    await fetchSession();
   }
-  // If not authenticated, redirect to home
-  if (!loggedIn.value) {
-    // Avoid infinite redirect
-    if (to.path === redirectGuestTo) {
-      return
+
+  // Handle guest-specific logic
+  if (only === 'guest') {
+    if (loggedIn.value) {
+      // Redirect authenticated users away from guest-only routes
+      if (to.path !== redirectUserTo) {
+        return navigateTo(redirectUserTo);
+      }
+    } else {
+      // Allow guests to access the current route
+      return;
     }
-    return navigateTo(redirectGuestTo)
   }
-})
+
+  // Handle user-specific logic (if needed in your app)
+  if (!loggedIn.value && to.path !== redirectGuestTo) {
+    return navigateTo(redirectGuestTo);
+  }
+});

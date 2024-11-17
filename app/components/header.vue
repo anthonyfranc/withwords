@@ -112,13 +112,8 @@ const userMenuItems = [
 
 async function logout() {
   try {
-    const { error } = await await signOut()
-    const toast = useToast();
-    toast.add({
-      title: 'Notification',
-      description: error ? 'Unable to log you out. Try again.' : 'You have been logged out.',
-      color: error ? 'red' : 'green'
-    });
+    await signOut()
+    
   } catch {
     useToast().add({
       title: 'Notification',

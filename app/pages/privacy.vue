@@ -151,6 +151,7 @@
 
 <script setup>
 definePageMeta({
-  layout: 'default'
+  layout: 'default',
+  auth: false
 })
 </script>

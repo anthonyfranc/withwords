@@ -1,10 +1,6 @@
 <template>
   <div class="min-h-[calc(100vh-4rem)] flex items-center justify-center py-12 px-4">
     <div class="max-w-md w-full">
-      <div class="text-center mb-8">
-        <h2 class="text-3xl font-bold">Sign in to your account</h2>
-      </div>
-      
       <UCard>
         <UForm :state="formState" @submit="handleLogin">
           <div class="space-y-4">
@@ -70,26 +66,18 @@ const formState = ref({
 
 const rememberMe = ref(false)
 const loading = ref(false)
-const client = useSupabaseClient()
+const auth = useAuth();
 const toast = useToast()
 
 const handleLogin = async () => {
   try {
     loading.value = true
-    const { data, error } = await client.auth.signInWithPassword({
+    const { error } = await auth.signIn.email({
       email: formState.value.email,
       password: formState.value.password
     })
 
     if (error) throw error
-
-    // Check email confirmation using email_confirmed_at
-    if (data.user && !data.user.email_confirmed_at) {
-      localStorage.setItem('verificationEmail', data.user.email)
-      return navigateTo('/auth/verify')
-    }
-
-    // If email is confirmed, redirect to dashboard
     navigateTo('/dashboard')
   } catch (error) {
     toast.add({
@@ -102,15 +90,12 @@ const handleLogin = async () => {
   }
 }
 
-// Only redirect if user is logged in AND email is confirmed
-const user = useSupabaseUser()
-watchEffect(() => {
-  if (user.value?.email_confirmed_at) {
-    navigateTo('/dashboard')
-  }
-})
 
 definePageMeta({
-  layout: 'default'
+  layout: 'default',
+  auth: {
+    only: "guest",
+    redirectUserTo: "/dashboard",
+  },
 })
 </script>
