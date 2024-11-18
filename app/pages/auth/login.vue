@@ -15,7 +15,7 @@
             <span class="text-2xl font-bold">withwords</span>
           </div>
         </NuxtLink>
-          <h1 class="text-4xl font-bold mb-4">Welcome to your AI development companion</h1>
+          <h1 class="text-4xl font-bold mb-4">AI development companion</h1>
           <p class="text-lg text-gray-600 dark:text-gray-400">
             Build better UI components faster with AI assistance
           </p>
