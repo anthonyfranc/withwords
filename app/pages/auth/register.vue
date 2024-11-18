@@ -246,7 +246,7 @@ async function onSubmit(event: FormSubmitEvent<any>) {
 }
 
 definePageMeta({
-  layout: "default",
+  layout: "main",
   auth: {
     only: "guest",
     redirectUserTo: "/dashboard",

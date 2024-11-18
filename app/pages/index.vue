@@ -150,7 +150,7 @@ onMounted(() => {
 })
 
 definePageMeta({
-  layout: 'default'
+  layout: 'main'
 })
 </script>
 

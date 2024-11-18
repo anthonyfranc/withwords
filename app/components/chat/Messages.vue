@@ -5,20 +5,19 @@
       class="flex-1 overflow-y-auto p-4 scroll-container"
     >
       <div class="max-w-4xl mx-auto space-y-6">
-        <ChatMessage
-          v-for="(message, index) in messages"
-          :key="message.id"
-          :message="message"
-          :is-latest="isLatestAssistantMessage(index)"
-          :regenerating="loading && isLatestAssistantMessage(index)"
-          @use-suggestion="handleSuggestion"
-          @regenerate="regenerateLastResponse"
-        />
+        <template v-for="(message, index) in visibleMessages" :key="message.id">
+          <ChatMessage
+            :message="message"
+            :is-latest="isLatestAssistantMessage(index)"
+            :regenerating="loading && isLatestAssistantMessage(index)"
+            @use-suggestion="handleSuggestion"
+            @regenerate="regenerateLastResponse"
+          />
+        </template>
         <ChatMessageSkeleton v-if="loading" />
       </div>
     </div>
 
-    <!-- New Message Indicator -->
     <Transition
       enter-active-class="transition duration-300 ease-out"
       enter-from-class="transform translate-y-8 opacity-0"
@@ -48,7 +47,7 @@
 
     <div class="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4">
       <div class="max-w-3xl mx-auto">
-        <div class="flex gap-2">
+        <form @submit.prevent="sendMessage" class="flex gap-2">
           <UTextarea
             v-model="input"
             placeholder="Ask about Nuxt UI components..."
@@ -56,13 +55,13 @@
             class="flex-1"
             autoresize
             :disabled="loading"
-            @keyup.enter.exact.prevent="sendMessage"
+            @keydown.enter.exact.prevent="sendMessage"
           />
           <UButton
+            type="submit"
             color="primary"
             :loading="loading"
             :disabled="!input.trim()"
-            @click="sendMessage"
             :ui="{ rounded: 'rounded-lg' }"
           >
             <template #leading>
@@ -70,13 +69,15 @@
             </template>
             Send
           </UButton>
-        </div>
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+const BATCH_SIZE = 20
+
 const props = defineProps({
   messages: {
     type: Array,
@@ -91,6 +92,10 @@ const props = defineProps({
 const input = ref('')
 const messagesContainer = ref(null)
 const { scrollToBottom, initScrollListener, showNewMessage } = useSmooth()
+const visibleMessages = computed(() => {
+  // Simple batching - show last BATCH_SIZE messages
+  return props.messages.slice(-BATCH_SIZE)
+})
 
 const emit = defineEmits(['send'])
 
@@ -123,26 +128,23 @@ const scrollToLatest = () => {
 }
 
 const isLatestAssistantMessage = (index) => {
-  // Find the last assistant message
-  const lastAssistantIndex = [...props.messages].reverse()
+  const lastAssistantIndex = [...visibleMessages.value]
+    .reverse()
     .findIndex(msg => msg.role === 'assistant')
   
-  // Get the actual index from the end
-  const actualIndex = props.messages.length - 1 - lastAssistantIndex
-  
+  const actualIndex = visibleMessages.value.length - 1 - lastAssistantIndex
   return index === actualIndex
 }
 
-// Watch for new messages or loading state changes
-watch([() => props.messages.length, () => props.loading], () => {
-  nextTick(() => {
-    if (messagesContainer.value) {
-      scrollToBottom(messagesContainer.value)
-    }
-  })
-})
+// Optimize scroll handling with debounce
+const debouncedScroll = useDebounceFn(() => {
+  if (messagesContainer.value) {
+    scrollToBottom(messagesContainer.value)
+  }
+}, 100)
 
-// Initialize scroll listener and scroll to bottom on mount
+watch([() => props.messages.length, () => props.loading], debouncedScroll)
+
 onMounted(() => {
   if (messagesContainer.value) {
     initScrollListener(messagesContainer.value)
@@ -153,12 +155,10 @@ onMounted(() => {
 
 <style scoped>
 .scroll-container {
-  /* For Firefox */
   scrollbar-width: thin;
   scrollbar-color: theme('colors.gray.400') theme('colors.gray.100');
 }
 
-/* For Webkit browsers */
 .scroll-container::-webkit-scrollbar {
   width: 8px;
 }
@@ -174,7 +174,6 @@ onMounted(() => {
   border: 2px solid theme('colors.gray.100');
 }
 
-/* Dark mode */
 :deep(.dark) .scroll-container {
   scrollbar-color: theme('colors.gray.600') theme('colors.gray.800');
 }
