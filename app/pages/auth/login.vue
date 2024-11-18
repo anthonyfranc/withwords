@@ -1,89 +1,24 @@
 <template>
-  <div class="min-h-[calc(100vh)] flex dark:bg-gray-950">
-    <!-- Left Panel -->
-    <div class="hidden lg:flex lg:w-1/2 relative overflow-hidden order-last border-l dark:border-gray-900 bg-gray-50 dark:bg-gray-900/20">
-      <div class="absolute inset-0 z-0 opacity-50 dark:opacity-100">
-        <HeroHomeBg />
-      </div>
-      
-      <div class="relative z-10 flex flex-col space-y-32 w-full p-12">
-        <!-- Brand Section -->
-        <div>
-          <NuxtLink to="/">
-          <div class="flex items-center gap-3 mb-12">
-            <UIcon name="solar:bolt-bold" class="w-10 h-10 text-primary-500" />
-            <span class="text-2xl font-bold">withwords</span>
+  <div class="min-h-[calc(100vh)] flex flex-col lg:flex-row">
+    <!-- Left Panel - Login Form -->
+    <div class="w-full lg:w-[580px] flex flex-col p-8 lg:p-12 border-r dark:border-gray-800">
+      <div class="flex-1">
+        <!-- Logo -->
+        <NuxtLink to="/" class="inline-block mb-16">
+          <div class="flex items-center gap-2">
+            <UIcon name="solar:bolt-bold" class="w-8 h-8 text-primary-500" />
+            <span class="font-semibold text-2xl">withwords</span>
           </div>
         </NuxtLink>
-          <h1 class="text-4xl font-bold mb-4">AI development companion</h1>
-          <p class="text-lg text-gray-600 dark:text-gray-400">
-            Build better UI components faster with AI assistance
-          </p>
-        </div>
-
-        <!-- Features List -->
-        <div class="space-y-5">
-          <div v-for="feature in features" :key="feature.title" class="flex items-start gap-3">
-            <UIcon :name="feature.icon" class="w-6 h-6 text-primary-500 flex-shrink-0 mt-1" />
-            <div>
-              <h3 class="font-medium mb-1">{{ feature.title }}</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-400">{{ feature.description }}</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Trust Section -->
-        <div>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-            Trusted by developers at
-          </p>
-          <div class="flex items-center gap-6">
-            <img src="https://raw.githubusercontent.com/nuxt/modules/main/icons/nuxt.svg" class="h-6 grayscale opacity-75" />
-            <img src="https://raw.githubusercontent.com/nuxt/modules/main/icons/tailwindcss.png" class="h-6 grayscale opacity-75" />
-            <img src="https://raw.githubusercontent.com/nuxt/modules/main/icons/vue.svg" class="h-6 grayscale opacity-75" />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Right Panel - Login Form -->
-    <div class="w-full lg:w-1/2 flex items-center justify-center p-8">
-      <div class="w-full max-w-md">
-        <div class="text-center lg:text-left mb-8">
-          <h2 class="text-2xl font-bold mb-2">Welcome</h2>
-          <p class="text-gray-600 dark:text-gray-400">
-            Sign in to continue building and learning with AI assistance.
-          </p>
-        </div>
-
-        <!-- Social Login -->
-        <div class="grid grid-cols-1 gap-3 mb-6">
-          <UButton
-            color="white"
-            variant="solid"
-            class="relative flex items-center justify-center space-x-2"
-            @click="() => {}"
-          >
-            <template #leading>
-              <UIcon name="i-simple-icons-github" class="w-5 h-5" />
-            </template>
-            GitHub
-          </UButton>
-        </div>
-
-        <!-- Divider -->
-        <div class="relative my-6">
-          <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-gray-200 dark:border-gray-800"></div>
-          </div>
-          <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-white dark:bg-gray-950 text-gray-500">
-              Or continue with
-            </span>
-          </div>
-        </div>
 
         <!-- Login Form -->
+        <div class="mb-8">
+          <h1 class="text-2xl font-semibold mb-2">Welcome back</h1>
+          <p class="text-gray-500 dark:text-gray-400">
+            Sign in to your account to continue
+          </p>
+        </div>
+
         <UForm :state="formState" @submit="handleLogin" class="space-y-4">
           <UFormGroup label="Email" name="email">
             <UInput
@@ -91,7 +26,7 @@
               type="email"
               autocomplete="email"
               placeholder="you@example.com"
-              icon="i-heroicons-envelope"
+              size="lg"
               required
             />
           </UFormGroup>
@@ -102,41 +37,117 @@
               type="password"
               autocomplete="current-password"
               placeholder="••••••••"
-              icon="i-heroicons-lock-closed"
+              size="lg"
               required
             />
           </UFormGroup>
 
-          <div class="flex items-center justify-between">
+          <div class="flex pt-2">
             <NuxtLink
               to="/auth/reset-password"
-              class="text-sm text-primary-600 hover:text-primary-500 font-medium"
+              class="text-sm text-gray-500 hover:text-primary-500 transition-colors"
             >
               Forgot password?
             </NuxtLink>
           </div>
 
-          <UButton
-            type="submit"
-            block
-            :loading="loading"
-          >
-            Sign in
-            <template #trailing>
-              <UIcon name="i-heroicons-arrow-right" />
-            </template>
-          </UButton>
+          <div class="pt-4">
+            <UButton
+              type="submit"
+              size="lg"
+              block
+              :loading="loading"
+            >
+              Sign in to your account
+            </UButton>
+          </div>
         </UForm>
 
-        <p class="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+        <!-- Social Login -->
+        <div class="mt-8">
+          <div class="relative mb-6">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t border-gray-200 dark:border-gray-800"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+              <span class="px-2 bg-white dark:bg-gray-950 text-gray-500">
+                Or continue with
+              </span>
+            </div>
+          </div>
+
+          <UButton
+            color="white"
+            variant="solid"
+            size="lg"
+            block
+            class="mb-4"
+          >
+            <template #leading>
+              <UIcon name="i-simple-icons-github" class="w-5 h-5" />
+            </template>
+            Continue with GitHub
+          </UButton>
+        </div>
+      </div>
+
+      <!-- Bottom Section -->
+      <div class="pt-8 mt-auto text-center lg:text-start">
+        <p class="text-sm text-gray-500 dark:text-gray-400">
           Don't have an account?
           <NuxtLink
             to="/auth/register"
-            class="font-medium text-primary-600 hover:text-primary-500"
+            class="text-primary-500 hover:text-primary-600 font-medium"
           >
-            Sign up for free
+            Create a free account
           </NuxtLink>
         </p>
+      </div>
+    </div>
+
+    <!-- Right Panel - Feature Showcase -->
+    <div class="hidden lg:flex flex-1 bg-gray-50 dark:bg-gray-900/50 relative overflow-hidden">
+      <div class="absolute inset-0 z-0 opacity-40 dark:opacity-100">
+        <HeroHomeBg />
+      </div>
+
+      <div class="relative z-10 flex flex-col justify-center p-12 max-w-2xl mx-auto">
+        <!-- Main Headline -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-bold mb-4">Build faster with AI assistance</h2>
+          <p class="text-lg text-gray-600 dark:text-gray-400">
+            Join thousands of developers using WithWords to accelerate their development workflow.
+          </p>
+        </div>
+
+        <!-- Features List -->
+        <div class="space-y-8">
+          <div v-for="feature in features" :key="feature.title" 
+            class="flex items-start gap-4 group">
+            <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center group-hover:bg-primary-100 dark:group-hover:bg-primary-900/50 transition-colors">
+              <UIcon :name="feature.icon" class="w-6 h-6 text-primary-500" />
+            </div>
+            <div>
+              <h3 class="font-medium mb-1 group-hover:text-primary-500 transition-colors">{{ feature.title }}</h3>
+              <p class="text-gray-600 dark:text-gray-400">{{ feature.description }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Proof -->
+        <div class="mt-12 pt-12 border-t border-gray-200 dark:border-gray-800">
+          <div class="flex items-center gap-4">
+            <UAvatar
+              src="https://i.pravatar.cc/64"
+              size="lg"
+              class="ring-4 ring-white dark:ring-gray-900"
+            />
+            <div>
+              <p class="text-sm font-medium mb-1">"WithWords has transformed how we build UI components. The AI assistance is like having an expert developer by your side."</p>
+              <div class="text-sm text-gray-500">Sarah Chen • Senior Frontend Developer at TechCorp</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -145,19 +156,24 @@
 <script setup lang="ts">
 const features = [
   {
+    icon: 'i-heroicons-cpu-chip',
+    title: 'AI-Powered Development',
+    description: 'Get intelligent code suggestions and real-time optimization recommendations as you build.'
+  },
+  {
     icon: 'i-heroicons-bolt',
-    title: 'Lightning Fast Development',
-    description: 'Get instant, production-ready code suggestions for your UI components.'
+    title: 'Lightning Fast Results',
+    description: 'Transform your ideas into production-ready code in seconds, not hours.'
+  },
+  {
+    icon: 'i-heroicons-academic-cap',
+    title: 'Learn Best Practices',
+    description: 'Understand modern development patterns and improve your coding skills as you work.'
   },
   {
     icon: 'i-heroicons-code-bracket',
     title: 'Framework Agnostic',
-    description: 'Works seamlessly with Nuxt, Vue, React, and other modern frameworks.'
-  },
-  {
-    icon: 'i-heroicons-sparkles',
-    title: 'AI-Powered Assistance',
-    description: 'Smart suggestions and optimizations based on best practices.'
+    description: 'Works seamlessly with your favorite frontend frameworks and development tools.'
   }
 ]
 
@@ -181,7 +197,6 @@ const handleLogin = async () => {
 
     if (error) throw error
     
-    // Store remember me preference
     if (rememberMe.value) {
       localStorage.setItem('rememberMe', 'true')
       localStorage.setItem('userEmail', formState.value.email)
@@ -202,7 +217,6 @@ const handleLogin = async () => {
   }
 }
 
-// Restore remembered email if exists
 onMounted(() => {
   if (localStorage.getItem('rememberMe') === 'true') {
     rememberMe.value = true
