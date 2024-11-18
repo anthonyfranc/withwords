@@ -9,6 +9,7 @@ export default defineNitroPlugin(() => {
     const auth = serverAuth()
     const { toBeCreated, toBeAdded, runMigrations } = await getMigrations(auth.options)
     if (!toBeCreated.length && !toBeAdded.length) {
+      consola.info('[better-auth] No pending migrations')
       return
     }
     consola.info(`[better-auth] Database migrations will affect the following tables:`)
@@ -18,5 +19,14 @@ export default defineNitroPlugin(() => {
     }
     await runMigrations()
     consola.success('[better-auth] Database migrations ran successfully')
+
+    // Verify tables exist
+    const db = hubDatabase()
+    const tables = await db.prepare(`
+      SELECT name FROM sqlite_master 
+      WHERE type='table' AND name IN ('users', 'sessions', 'auth_keys', 'verification_tokens')
+    `).all()
+    
+    consola.info('[better-auth] Existing tables:', tables.results?.map(t => t.name).join(', '))
   })
 })

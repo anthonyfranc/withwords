@@ -1,6 +1,7 @@
 import { betterAuth } from 'better-auth'
 import { D1Dialect } from '@atinux/kysely-d1'
 import { anonymous, admin } from 'better-auth/plugins'
+import { consola } from 'consola'
 
 let _auth: ReturnType<typeof betterAuth>
 export function serverAuth() {
@@ -20,8 +21,17 @@ export function serverAuth() {
         delete: key => hubKV().del(`_auth:${key}`),
       },
       baseURL: getBaseURL(),
+      basePath: '/api/auth',
       emailAndPassword: {
         enabled: true,
+        onBeforeCreateUser: async (user, ctx) => {
+          consola.info('[better-auth] Creating user:', user)
+          return user
+        },
+        onAfterCreateUser: async (user, ctx) => {
+          consola.success('[better-auth] User created:', user)
+          return user
+        },
       },
       socialProviders: {
         github: {
