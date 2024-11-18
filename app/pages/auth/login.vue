@@ -2,11 +2,11 @@
   <div class="min-h-[calc(100vh)] flex dark:bg-gray-950">
     <!-- Left Panel -->
     <div class="hidden lg:flex lg:w-1/2 relative overflow-hidden order-last border-l dark:border-gray-900 bg-gray-50 dark:bg-gray-900/20">
-      <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 z-0 opacity-50 dark:opacity-100">
         <HeroHomeBg />
       </div>
       
-      <div class="relative z-10 flex flex-col justify-between w-full p-12">
+      <div class="relative z-10 flex flex-col space-y-32 w-full p-12">
         <!-- Brand Section -->
         <div>
           <NuxtLink to="/">
@@ -22,7 +22,7 @@
         </div>
 
         <!-- Features List -->
-        <div class="space-y-6">
+        <div class="space-y-5">
           <div v-for="feature in features" :key="feature.title" class="flex items-start gap-3">
             <UIcon :name="feature.icon" class="w-6 h-6 text-primary-500 flex-shrink-0 mt-1" />
             <div>
@@ -77,7 +77,7 @@
             <div class="w-full border-t border-gray-200 dark:border-gray-800"></div>
           </div>
           <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-white text-gray-500">
+            <span class="px-2 bg-white dark:bg-gray-950 text-gray-500">
               Or continue with
             </span>
           </div>
