@@ -18,7 +18,7 @@
         <!-- Contact Information -->
         <div class="space-y-8">
           <!-- Contact Cards -->
-          <UCard v-for="item in contactInfo" :key="item.title" class="transition-all duration-300 hover:shadow-lg">
+          <UCard v-for="item in contactInfo" :key="item.title">
             <div class="flex items-start gap-4">
               <div class="flex-shrink-0">
                 <UIcon 
@@ -162,6 +162,7 @@ const onSubmit = async () => {
 }
 
 definePageMeta({
-  layout: 'default'
+  layout: 'main',
+  auth: false
 })
 </script>

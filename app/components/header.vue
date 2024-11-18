@@ -49,7 +49,7 @@
         </UDropdown>
       </template>
       <template v-else>
-        <UButton to="/" variant="solid" color="black" :ui="{ rounded: 'rounded-full' }">Get Started</UButton>
+        <UButton to="/auth/login" variant="solid" color="black" :ui="{ rounded: 'rounded-full' }">Get Started</UButton>
       </template>
       <UColorModeButton />
     </template>

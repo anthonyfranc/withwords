@@ -124,7 +124,7 @@ const selectPlan = (plan) => {
   if (plan.name === 'Enterprise') {
     navigateTo('/contact')
   } else {
-    navigateTo('/auth/register')
+    navigateTo('/auth/login')
   }
 }
 </script>
